@@ -6,8 +6,16 @@
 package consoleappslangword;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -19,6 +27,12 @@ public class ConsoleAppSlangWord {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
+        
+        Map<String, List<String>> data = DocFile();
+        System.out.println( data );
+
+        
+        
         BufferedReader br=new BufferedReader(new InputStreamReader( System.in));  
         int keyMenu = -1;
         do {  
@@ -75,6 +89,26 @@ public class ConsoleAppSlangWord {
                   System.out.println("Lua chon khong phu hop, vui long nhap lai");
               }
         } while(keyMenu != 0); 
+    }
+    
+    public static Map<String, List<String>> DocFile() throws FileNotFoundException, IOException{
+      String stringFile =""; 
+      Map<String, List<String>> data = new HashMap<String, List<String>>();
+      String str;
+                      BufferedReader br = new BufferedReader(new FileReader("slang.txt"));
+		while (true)
+		{
+			str = br.readLine();
+                        if (str==null)
+				break;
+                        List<String> listValue = new ArrayList<String>();                      
+                        String valueItem = str.split("`")[1];
+                        valueItem = valueItem.replaceAll(Pattern.quote("|"), "-");
+                        listValue =  Arrays.asList(valueItem.split("-"));
+                        data.put(str.split("`")[0],listValue);                
+		}
+        br.close();
+        return data;
     }
     
 }
