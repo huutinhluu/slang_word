@@ -22,13 +22,15 @@ import java.util.regex.Pattern;
  * @author ASUS
  */
 public class ConsoleAppSlangWord {
+	
+	public static  Map<String, List<String>> data;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
         
-        Map<String, List<String>> data = DocFile();
+        data = DocFile();
         System.out.println( data );
 
         
@@ -45,10 +47,10 @@ public class ConsoleAppSlangWord {
             System.out.println("6. Xoa 1 slang word");
             System.out.println("7. Reset ve danh sach slang word goc");
             System.out.println("8. Random 1 slang word");
-            System.out.println("9. Do vui, tim definition của slang word cho truoc");
+            System.out.println("9. Do vui, tim definition cac slang word cho truoc");
             System.out.println("10. Do vui, tim slang word tu definition cho truoc");
             System.out.println("0. Thoat chuong trinh");
-            System.out.println("-------------------\n Nhap so lua chon: ");
+            System.out.print("-------------------\n Nhap so lua chon: ");
             try {
                 keyMenu = Integer.parseInt(br.readLine());
             } catch (Exception e){
@@ -56,7 +58,9 @@ public class ConsoleAppSlangWord {
             }
             switch(keyMenu) {
                 case 1:
-                  System.out.println("Chuc nang 1");
+                  System.out.print("Nhap slang word:");
+                  String keySlang = br.readLine();
+                  ChucNang1(keySlang);                  
                   break;
                 case 2:
                   System.out.println("Chuc nang 2");
@@ -89,6 +93,20 @@ public class ConsoleAppSlangWord {
                   System.out.println("Lua chon khong phu hop, vui long nhap lai");
               }
         } while(keyMenu != 0); 
+    }
+    
+    public static void ChucNang1(String key){
+    	key = key.toUpperCase();
+    	if(data.get(key)!= null ) {
+    		System.out.println("Cac definition cua " + key + " la: ");
+    		for(String item : data.get(key))
+            {
+          	  System.out.println("+ " + item);
+            }
+    	}
+    	else {
+    		System.out.println("Khong tim thay definition");
+    	}
     }
     
     public static Map<String, List<String>> DocFile() throws FileNotFoundException, IOException{
