@@ -70,13 +70,13 @@ public class ConsoleAppSlangWord {
                     ChucNang2(valueDefination);
                   break;
                 case 3:
-                	ChucNang3();
+                  ChucNang3();
                   break;
                 case 4:
                   ChucNang4();
                   break;
                 case 5:
-                  System.out.println("Chuc nang 5");
+                  ChucNang5();
                   break;
                 case 6:
                   System.out.println("Chuc nang 6");
@@ -159,9 +159,33 @@ public class ConsoleAppSlangWord {
     	data_Root.put(keyNew, listDefinition);
     	Map<String, List<String>> newData = new HashMap<String,List<String>>();
     	newData.put(keyNew, listDefinition);
-    	GhiFile(newData);
+    	GhiFile(newData,true);
     	System.out.println("Them moi thanh cong");
-    	System.out.println(data_Root);
+    }
+    
+    public static void ChucNang5() throws IOException{
+    	System.out.println("Nhap slang can edit: ");
+    	String keyEdit = br.readLine().toUpperCase();
+    	if(!data_Root.containsKey(keyEdit)) {
+    		System.out.println("Khong tim thay");
+    		return;
+    	}
+    	List<String> listDefinition = new ArrayList<String>();
+    	int index = 1;
+    	String definition;
+    	do {
+    		System.out.println("Nhap phim 1 de thay doi definition");
+    		System.out.print("Definition " + index + ": " );
+    		definition = br.readLine();
+    		if(!definition.equals("1")) {
+    			listDefinition.add(definition);
+    		}
+    		index++;
+    	} while (!definition.equals("1"));
+    	data_Root.remove(keyEdit);
+    	data_Root.put(keyEdit, listDefinition);
+    	GhiFile(data_Root,false);
+    	System.out.println("Thay doi thanh cong");
     }
     
     public static Map<String, List<String>> DocFile() throws FileNotFoundException, IOException{
@@ -184,8 +208,8 @@ public class ConsoleAppSlangWord {
         return data;
     }
     
-    public static void GhiFile(Map<String, List<String>> data) throws IOException {
-    	FileWriter fw = new FileWriter("slang_output.txt",true);
+    public static void GhiFile(Map<String, List<String>> data, boolean type) throws IOException {
+    	FileWriter fw = new FileWriter("slang_output.txt",type);
     	for (Entry<String, List<String>> entry: data_Root.entrySet())
         {
             List<String> listDefinition = entry.getValue();
