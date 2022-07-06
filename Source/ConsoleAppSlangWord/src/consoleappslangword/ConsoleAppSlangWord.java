@@ -8,6 +8,7 @@ package consoleappslangword;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -25,8 +26,8 @@ import java.util.regex.Pattern;
 public class ConsoleAppSlangWord {
 	
 	public static  Map<String, List<String>> data_Root;
-	public static  Map<String, List<String>> data_Process;
 	public static List<String> listHistorySlang = new ArrayList<String>();
+	public static BufferedReader br=new BufferedReader(new InputStreamReader( System.in));  
 
     /**
      * @param args the command line arguments
@@ -34,12 +35,8 @@ public class ConsoleAppSlangWord {
     public static void main(String[] args) throws IOException {
         
     	data_Root = DocFile();
-    	data_Process = DocFile_XuLy();
-        System.out.println( data_Process );
-
+        System.out.println( data_Root );    
         
-        
-        BufferedReader br=new BufferedReader(new InputStreamReader( System.in));  
         int keyMenu = -1;
         do {  
             System.out.println("------------------\nMENU CHUC NANG");
@@ -76,7 +73,7 @@ public class ConsoleAppSlangWord {
                 	ChucNang3();
                   break;
                 case 4:
-                  System.out.println("Chuc nang 4");
+                  ChucNang4();
                   break;
                 case 5:
                   System.out.println("Chuc nang 5");
@@ -106,7 +103,7 @@ public class ConsoleAppSlangWord {
     
     public static void ChucNang1(String key){
     	key = key.toUpperCase();
-    	if(data_Process.get(key)!= null ) {
+    	if(data_Root.get(key)!= null ) {
     		System.out.println("Cac definition cua " + key + " la: ");
     		for(String item : data_Root.get(key))
             {
@@ -142,7 +139,29 @@ public class ConsoleAppSlangWord {
     	else {
     		System.out.println("Chua co lich su tim kiem nao");
     	}
-    	
+    }
+    
+    public static void ChucNang4() throws IOException{
+    	System.out.println("Nhap slang word moi: ");
+    	String keyNew = br.readLine().toUpperCase();
+    	List<String> listDefinition = new ArrayList<String>();
+    	int index = 1;
+    	String definition;
+    	do {
+    		System.out.println("Nhap phim 1 de them slang word moi");
+    		System.out.print("Definition " + index + ": " );
+    		definition = br.readLine();
+    		if(!definition.equals("1")) {
+    			listDefinition.add(definition);
+    		}
+    		index++;
+    	} while (!definition.equals("1"));
+    	data_Root.put(keyNew, listDefinition);
+    	Map<String, List<String>> newData = new HashMap<String,List<String>>();
+    	newData.put(keyNew, listDefinition);
+    	GhiFile(newData);
+    	System.out.println("Them moi thanh cong");
+    	System.out.println(data_Root);
     }
     
     public static Map<String, List<String>> DocFile() throws FileNotFoundException, IOException{
@@ -165,34 +184,37 @@ public class ConsoleAppSlangWord {
         return data;
     }
     
-    public static Map<String, List<String>> DocFile_XuLy() throws FileNotFoundException, IOException{
-        String stringFile =""; 
-        Map<String, List<String>> data = new HashMap<String, List<String>>();
-        String str;
-                        BufferedReader br = new BufferedReader(new FileReader("slang.txt"));
-  		while (true)
-  		{
-  			str = br.readLine();
-                          if (str==null)
-  				break;
-                          List<String> listValue = new ArrayList<String>();                      
-                          String valueItem = str.split("`")[1].toUpperCase();
-                          valueItem = valueItem.replaceAll(Pattern.quote("|"), "-");
-                          listValue =  Arrays.asList(valueItem.split("-"));
-                          data.put(str.split("`")[0].toUpperCase(),listValue);                
-  		}
-          br.close();
-          return data;
-      }
+    public static void GhiFile(Map<String, List<String>> data) throws IOException {
+    	FileWriter fw = new FileWriter("slang_output.txt",true);
+    	for (Entry<String, List<String>> entry: data_Root.entrySet())
+        {
+            List<String> listDefinition = entry.getValue();
+            String itemLast = listDefinition.get(listDefinition.size()-1);
+            fw.write(entry.getKey().toUpperCase() + "`" );
+            for (String item : listDefinition) {
+            	if(item.equals(itemLast))
+            	{
+            		fw.write(item);
+            	}
+            	else {
+            		fw.write(item + "|" );
+            	}
+            }
+            fw.write("\n");
+        }
+        
+        fw.close();
+    }
     
     public static List<String> getKey(String string)
     {
     	List<String> listKey = new ArrayList<String>();
-        for (Entry<String, List<String>> entry: data_Process.entrySet())
+        for (Entry<String, List<String>> entry: data_Root.entrySet())
         {
             List<String> listDefinition = entry.getValue();
             for (String item : listDefinition) {
-            	if(item.contains(string))
+            	String temp = item.toUpperCase();
+            	if(temp.contains(string))
             	{
             		listKey.add(entry.getKey());
             	}
