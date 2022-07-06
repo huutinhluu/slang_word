@@ -79,7 +79,7 @@ public class ConsoleAppSlangWord {
                   ChucNang5();
                   break;
                 case 6:
-                  System.out.println("Chuc nang 6");
+                  ChucNang6();
                   break;
                 case 7:
                   System.out.println("Chuc nang 7");
@@ -186,6 +186,18 @@ public class ConsoleAppSlangWord {
     	data_Root.put(keyEdit, listDefinition);
     	GhiFile(data_Root,false);
     	System.out.println("Thay doi thanh cong");
+    }
+    
+    public static void ChucNang6() throws IOException{
+    	System.out.println("Nhap slang can xoa: ");
+    	String keyRemove = br.readLine().toUpperCase();
+    	if(!data_Root.containsKey(keyRemove)) {
+    		System.out.println("Khong tim thay");
+    		return;
+    	}
+    	data_Root.remove(keyRemove);
+    	GhiFile(data_Root,false);
+    	System.out.println("Xoa thanh cong");
     }
     
     public static Map<String, List<String>> DocFile() throws FileNotFoundException, IOException{
