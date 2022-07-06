@@ -26,6 +26,7 @@ public class ConsoleAppSlangWord {
 	
 	public static  Map<String, List<String>> data_Root;
 	public static  Map<String, List<String>> data_Process;
+	public static List<String> listHistorySlang = new ArrayList<String>();
 
     /**
      * @param args the command line arguments
@@ -63,6 +64,7 @@ public class ConsoleAppSlangWord {
                 case 1:
                   System.out.print("Nhap slang word:");
                   String keySlang = br.readLine();
+                  listHistorySlang.add(keySlang);
                   ChucNang1(keySlang);                  
                   break;
                 case 2:
@@ -71,7 +73,7 @@ public class ConsoleAppSlangWord {
                     ChucNang2(valueDefination);
                   break;
                 case 3:
-                  System.out.println("Chuc nang 3");
+                	ChucNang3();
                   break;
                 case 4:
                   System.out.println("Chuc nang 4");
@@ -126,6 +128,19 @@ public class ConsoleAppSlangWord {
     	}
     	else {
     		System.out.println("Khong tim thay slang word nao");
+    	}
+    	
+    }
+    
+    public static void ChucNang3(){
+    	if(listHistorySlang.size()> 0) {
+    		System.out.println("Lich su tim kiem cac slang word: ");
+    		for(String item : listHistorySlang) {
+    			System.out.println ("+ " + item);
+    		}
+    	}
+    	else {
+    		System.out.println("Chua co lich su tim kiem nao");
     	}
     	
     }
