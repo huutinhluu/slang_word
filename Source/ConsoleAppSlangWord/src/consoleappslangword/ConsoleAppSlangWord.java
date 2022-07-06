@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -87,7 +88,7 @@ public class ConsoleAppSlangWord {
                 ChucNang7();
                   break;
                 case 8:
-                  System.out.println("Chuc nang 8");
+                  ChucNang8();
                   break;
                 case 9:
                   System.out.println("Chuc nang 9");
@@ -214,6 +215,47 @@ public class ConsoleAppSlangWord {
     	data_Root = DocFile(rootFile);
     	GhiFile(data_Root,false);
     	System.out.println("Reset danh sach thanh cong");
+    }
+    
+    public static void ChucNang8() throws FileNotFoundException, IOException {
+    	Random generator = new Random();
+    	Object[] keys = data_Root.keySet().toArray();
+    	Object randomKey = keys[generator.nextInt(keys.length)];
+    	System.out.println("Hay chon definition dung cua " + randomKey);
+    	
+        List<String> givenList = new ArrayList<String>();
+        List<String> listDefinition = data_Root.get(randomKey);
+        givenList.add(listDefinition.get(generator.nextInt(listDefinition.size())));
+        
+        for (int i = 0; i < 3; i++) {
+        	Object[] values = data_Root.values().toArray();
+        	Object randomValue = values[generator.nextInt(values.length)];
+        	givenList.add(randomValue.toString().replace("[", "").replace("]", ""));
+        }
+        
+        int numberOfElements = 4;
+        List<String> listIndex = new ArrayList<String>() ;
+        for (int i = 1; i < numberOfElements+1; i++) {
+            int randomIndex = generator.nextInt(givenList.size());
+            String randomElement = givenList.get(randomIndex);
+            System.out.println(i + ". " + randomElement);
+            listIndex.add(randomElement);
+            givenList.remove(randomIndex);
+        }
+        System.out.print("Lua chon cua ban la: ");
+        int indexAnswer = Integer.parseInt(br.readLine()) - 1;
+    	String answer = listIndex.get(indexAnswer);
+    	if(data_Root.get(randomKey).contains(answer)) {
+    		System.out.println("Chuc mung ban da chon dung");
+    	}
+    	else {
+    		System.out.println("Rat tiec ban da chon sai.");
+    		for (int i = 0; i < numberOfElements; i++) {
+                if(data_Root.get(randomKey).contains(listIndex.get(i))) {
+                	System.out.println("Dap an la: " + (i+1) + ". " + listIndex.get(i));
+                }
+            }    		
+    	}
     }
     
     public static Map<String, List<String>> DocFile(String nameFile) throws FileNotFoundException, IOException{
