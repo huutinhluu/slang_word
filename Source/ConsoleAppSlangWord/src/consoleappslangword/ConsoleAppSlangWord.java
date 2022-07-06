@@ -37,12 +37,11 @@ public class ConsoleAppSlangWord {
      */
     public static void main(String[] args) throws IOException {
         
-    	data_Root = DocFile(outputFile);
-        System.out.println( data_Root );    
+    	data_Root = DocFile(outputFile);   
         
         int keyMenu = -1;
         do {  
-            System.out.println("------------------\nMENU CHUC NANG");
+            System.out.println("\n\n------------------\nMENU CHUC NANG");
             System.out.println("1. Tim kiem theo Slang word");
             System.out.println("2. Tim kiem theo definition");
             System.out.println("3. Hien thi history");
@@ -91,10 +90,10 @@ public class ConsoleAppSlangWord {
                   ChucNang8();
                   break;
                 case 9:
-                  System.out.println("Chuc nang 9");
+                  ChucNang9();
                   break;
                 case 10:
-                  System.out.println("Chuc nang 10");
+                  ChucNang10();
                   break;
                 default:
                 	if(keyMenu != 0) {
@@ -109,9 +108,9 @@ public class ConsoleAppSlangWord {
     	if(data_Root.get(key)!= null ) {
     		System.out.println("Cac definition cua " + key + " la: ");
     		for(String item : data_Root.get(key))
-            {
-          	  System.out.println("+ " + item);
-            }
+                {
+                    System.out.println("+ " + item);
+                }
     	}
     	else {
     		System.out.println("Khong tim thay definition");
@@ -221,6 +220,17 @@ public class ConsoleAppSlangWord {
     	Random generator = new Random();
     	Object[] keys = data_Root.keySet().toArray();
     	Object randomKey = keys[generator.nextInt(keys.length)];
+    	System.out.println("Cac definition cua " + randomKey + " la: ");
+    		for(String item : data_Root.get(randomKey))
+                {
+                    System.out.println("+ " + item);
+                }
+    }
+    
+    public static void ChucNang9() throws FileNotFoundException, IOException {
+    	Random generator = new Random();
+    	Object[] keys = data_Root.keySet().toArray();
+    	Object randomKey = keys[generator.nextInt(keys.length)];
     	System.out.println("Hay chon definition dung cua " + randomKey);
     	
         List<String> givenList = new ArrayList<String>();
@@ -258,21 +268,69 @@ public class ConsoleAppSlangWord {
     	}
     }
     
+    public static void ChucNang10() throws FileNotFoundException, IOException {
+    	Random generator = new Random();
+    	Object[] values = data_Root.values().toArray();
+        Object randomValue = values[generator.nextInt(values.length)].toString().replace("[", "").replace("]", "");
+        List<String> listValue = Arrays.asList(randomValue.toString().split(","));
+        String value = listValue.get(generator.nextInt(listValue.size()));
+    	System.out.println("Hay chon slang word dung cua " + value);
+    	
+        List<String> givenList = new ArrayList<String>();
+        List<String> listSlang = getKey(value.toUpperCase());
+        givenList.add(listSlang.get(0));
+        
+        for (int i = 0; i < 3; i++) {
+        	Object[] keys = data_Root.keySet().toArray();
+                Object randomKey = keys[generator.nextInt(keys.length)];
+        	givenList.add(randomKey.toString());
+        }
+        
+        int numberOfElements = 4;
+        List<String> listIndex = new ArrayList<String>() ;
+        for (int i = 1; i < numberOfElements+1; i++) {
+            int randomIndex = generator.nextInt(givenList.size());
+            String randomElement = givenList.get(randomIndex);
+            System.out.println(i + ". " + randomElement);
+            listIndex.add(randomElement);
+            givenList.remove(randomIndex);
+        }
+        System.out.print("Lua chon cua ban la: ");
+        int indexAnswer = Integer.parseInt(br.readLine()) - 1;
+    	String answer = listIndex.get(indexAnswer);
+    	if(data_Root.get(listIndex.get(indexAnswer)).contains(value)) {
+    		System.out.println("Chuc mung ban da chon dung");
+    	}
+    	else {
+    		System.out.println("Rat tiec ban da chon sai.");
+    		for (int i = 0; i < numberOfElements; i++) {
+                if(data_Root.get(listIndex.get(i)).contains(value)) {
+                	System.out.println("Dap an la: " + (i+1) + ". " + listIndex.get(i));
+                }
+            }    		
+    	}
+    }
+    
     public static Map<String, List<String>> DocFile(String nameFile) throws FileNotFoundException, IOException{
       String stringFile =""; 
       Map<String, List<String>> data = new HashMap<String, List<String>>();
       String str;
-                      BufferedReader br = new BufferedReader(new FileReader(nameFile));
+    BufferedReader br = new BufferedReader(new FileReader(nameFile));
 		while (true)
 		{
 			str = br.readLine();
                         if (str==null)
 				break;
-                        List<String> listValue = new ArrayList<String>();                      
+                        List<String> listValue = new ArrayList<String>();
+                        try {
                         String valueItem = str.split("`")[1];
                         valueItem = valueItem.replaceAll(Pattern.quote("|"), "-");
                         listValue =  Arrays.asList(valueItem.split("-"));
-                        data.put(str.split("`")[0],listValue);                
+                        data.put(str.split("`")[0],listValue);     
+                        }
+                        catch(Exception e){
+                            // next
+                        }
 		}
         br.close();
         return data;
