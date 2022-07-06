@@ -28,13 +28,15 @@ public class ConsoleAppSlangWord {
 	public static  Map<String, List<String>> data_Root;
 	public static List<String> listHistorySlang = new ArrayList<String>();
 	public static BufferedReader br=new BufferedReader(new InputStreamReader( System.in));  
+	public static String outputFile = "slang_output.txt";
+	public static String rootFile = "slang.txt";
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
         
-    	data_Root = DocFile();
+    	data_Root = DocFile(outputFile);
         System.out.println( data_Root );    
         
         int keyMenu = -1;
@@ -82,7 +84,7 @@ public class ConsoleAppSlangWord {
                   ChucNang6();
                   break;
                 case 7:
-                  System.out.println("Chuc nang 7");
+                ChucNang7();
                   break;
                 case 8:
                   System.out.println("Chuc nang 8");
@@ -195,16 +197,30 @@ public class ConsoleAppSlangWord {
     		System.out.println("Khong tim thay");
     		return;
     	}
-    	data_Root.remove(keyRemove);
-    	GhiFile(data_Root,false);
-    	System.out.println("Xoa thanh cong");
+    	System.out.println("Nhap delete de xac nhan xoa: ");
+    	String keyCheck = br.readLine().toUpperCase();
+    	if(keyCheck.equals("DELETE")) {
+    		data_Root.remove(keyRemove);
+        	GhiFile(data_Root,false);
+        	System.out.println("Xoa thanh cong");
+    	}
+    	else {
+    		System.out.println("Xoa khong thanh cong");    		
+    	}
     }
     
-    public static Map<String, List<String>> DocFile() throws FileNotFoundException, IOException{
+    public static void ChucNang7() throws FileNotFoundException, IOException {
+    	data_Root.clear();
+    	data_Root = DocFile(rootFile);
+    	GhiFile(data_Root,false);
+    	System.out.println("Reset danh sach thanh cong");
+    }
+    
+    public static Map<String, List<String>> DocFile(String nameFile) throws FileNotFoundException, IOException{
       String stringFile =""; 
       Map<String, List<String>> data = new HashMap<String, List<String>>();
       String str;
-                      BufferedReader br = new BufferedReader(new FileReader("slang.txt"));
+                      BufferedReader br = new BufferedReader(new FileReader(nameFile));
 		while (true)
 		{
 			str = br.readLine();
