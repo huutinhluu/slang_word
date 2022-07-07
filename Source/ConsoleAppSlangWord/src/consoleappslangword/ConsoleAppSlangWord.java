@@ -29,15 +29,16 @@ public class ConsoleAppSlangWord {
 	public static  Map<String, List<String>> data_Root;
 	public static List<String> listHistorySlang = new ArrayList<String>();
 	public static BufferedReader br=new BufferedReader(new InputStreamReader( System.in));  
-	public static String outputFile = "slang_output.txt";
-	public static String rootFile = "slang.txt";
+	static String current = System.getProperty("user.dir");
+	public static String outputFile = current + "\\output.txt";
+	public static String rootFile = current + "\\slang.txt";
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
         
-    	data_Root = DocFile(outputFile);   
+    	data_Root = DocFile(outputFile);
         
         int keyMenu = -1;
         do {  
@@ -315,7 +316,7 @@ public class ConsoleAppSlangWord {
       String stringFile =""; 
       Map<String, List<String>> data = new HashMap<String, List<String>>();
       String str;
-    BufferedReader br = new BufferedReader(new FileReader(nameFile));
+    BufferedReader br = new BufferedReader(new FileReader(outputFile));
 		while (true)
 		{
 			str = br.readLine();
@@ -337,7 +338,7 @@ public class ConsoleAppSlangWord {
     }
     
     public static void GhiFile(Map<String, List<String>> data, boolean type) throws IOException {
-    	FileWriter fw = new FileWriter("slang_output.txt",type);
+    	FileWriter fw = new FileWriter(outputFile,type);
     	for (Entry<String, List<String>> entry: data_Root.entrySet())
         {
             List<String> listDefinition = entry.getValue();
