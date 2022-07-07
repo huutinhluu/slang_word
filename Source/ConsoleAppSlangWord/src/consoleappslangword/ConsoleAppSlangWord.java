@@ -316,7 +316,7 @@ public class ConsoleAppSlangWord {
       String stringFile =""; 
       Map<String, List<String>> data = new HashMap<String, List<String>>();
       String str;
-    BufferedReader br = new BufferedReader(new FileReader(outputFile));
+    BufferedReader br = new BufferedReader(new FileReader(nameFile));
 		while (true)
 		{
 			str = br.readLine();

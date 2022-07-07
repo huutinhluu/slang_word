@@ -27,7 +27,6 @@ BBZ`Babes
 SDK`Software Development Kit
 BCD`Behind Closed Doors
 BCC`Blind Carbon Copy
-$`Dollar| money
 BCF`Best Cousin Forever
 BCE`Before Common Era
 &`And
@@ -162,10 +161,12 @@ SIV`Bad goalie in hockey
 BHH`Bless His/Her Heart
 YTMND`You're The Man Now, Dog
 BHM`Big Handsome Man
+Æ`Registered Trademark Symbol
 BHO`Barak Hussein Obama
 8====D`Penis
 BHS`Be Home Soon
 MSFT`Microsoft (stock symbol)
+Ô`Trademark
 OHKO`One Hit Knock Out
 BOOMERS`Psilocybin (magic) mushrooms
 BIC`Believe It Comrade
@@ -3661,7 +3662,6 @@ TMAI`Tell Me About It
 JPEG`Joint Photographic Experts Group| Image file format
 DINLO`Stupid person
 YRG`You Are Good!
-ô`Trademark
 IMBO`In My Biased Opinion
 YRO`Your Rights Online
 TMBG`They Might Be Giants (band)
@@ -4123,7 +4123,6 @@ ZUP`What's up?
 OOTD`Offer Of The Day| Outfit Of The Day
 ITA`I Totally Agree
 WAEFRD`When All Else Fails, Read Directions
-SLAG`Meaning
 ZUT`Damn it
 BION`Believe It Or Not
 ITC`In That Case| In This Channel
@@ -4406,6 +4405,7 @@ DUSTY`Ugly
 K3U`I Love You
 JAFA`Just Another F***ing Aucklander
 HLAS`Hook, Line And Sinker
+SLAG`Meaning
 URGH`annoyance| displeasure
 SLAB`Slow Low/Loud And Bangin'| customized car
 PBUH`Peace Be Upon Him
@@ -6759,7 +6759,6 @@ YBWM`You Belong With Me
 HAGD`Have A Good Day
 WYBMV`Will You Be My Valentine?
 SLUGS`Bullets
-Æ`Registered Trademark Symbol
 LMSO`Laughing My Socks Off
 HAGL`Have A Good Life
 IDLT`I Don't Like That
